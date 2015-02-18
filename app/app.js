@@ -18,7 +18,12 @@ app.config(function ($routeProvider) {
 app.controller('OrganisationCtrl', function ($scope, $http) {
   function ensure(parent,pathParts,i,leaf) {
     if(i >= pathParts.length){
-      parent.children.push({isFolder: false, name: leaf, link: 'https://github.com/' + $scope.organisationName + '/' + pathParts.join($scope.separator) + $scope.separator + leaf  });
+      var link = 'https://github.com/' + $scope.organisationName + '/';
+      if(pathParts.length > 0) {
+        link = link + pathParts.join($scope.separator) + $scope.separator
+      }
+      link = link + leaf;
+      parent.children.push({isFolder: false, name: leaf, link: link  });
       return;
     }
     var children = $.grep(parent.children, function(child){ return child.isFolder && child.name === pathParts[i];});
