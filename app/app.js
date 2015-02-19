@@ -69,6 +69,10 @@ app.controller('OrganisationCtrl', function ($scope, $http, $location, $routePar
           insert(name.split($scope.separator));
         });
         $scope.current = $scope.tree;
+      }).
+      error(function(data, status) {
+          $scope.error = data || "Request failed";
+          $scope.status = status;
       });
   }
 
