@@ -12,7 +12,7 @@
   <div class="panel panel-default" ng-show="current.name">
     <div class="panel-body">
       <ol class="breadcrumb" >
-        <li><a href="/" ><span class="octicon octicon-home"></span></a></li>
+        <li><a href=".." ><span class="octicon octicon-home"></span></a></li>
         <li ng-repeat="part in getPath(current)"><a href ng-click="browse(part)" >{{part.name}}</a></li>
       </ol>
 
