@@ -1,4 +1,14 @@
 <div ng-controller="OrganisationCtrl">
+
+  <div ng-hide="current.name">
+    <div >
+      <div class="load-message">
+        <i class="fa fa-spinner fa-pulse"></i>
+      </div>
+    </div>
+  </div>
+
+
   <div class="panel panel-default" ng-show="current.name">
     <div class="panel-body">
       <ol class="breadcrumb" >
