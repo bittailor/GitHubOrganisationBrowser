@@ -18,9 +18,9 @@ app.config(function ($routeProvider) {
     });
 });
 
-app.controller('MainCtrl', function ($scope, $location) {
-  $scope.organisationName = 'BtDraftOrganization';
-  $scope.separator = '.';
+app.controller('MainCtrl', function ($scope, $location, $routeParams) {
+  $scope.organisationName = $routeParams.org || 'BtDraftOrganization';
+  $scope.separator = $routeParams.sep ||  '.';
   $scope.browse = browse;
 
 
