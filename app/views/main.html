@@ -1,0 +1,13 @@
+<div ng-controller="MainCtrl">
+  <form novalidate class="form-inline">
+    <div class="form-group">
+      <label for="organisationName">Organisation name</label>
+      <input type="text" id="organisationName" class="form-control" ng-model="organisationName"/>
+    </div>
+    <div class="form-group">
+      <label for="separator">Separator</label>
+      <input type="text" id="separator" class="form-control" ng-model="separator"/>
+    </div>
+    <button type="submit" class="btn btn-default" ng-click="browse()">Browse</button>
+  </form>
+</div>

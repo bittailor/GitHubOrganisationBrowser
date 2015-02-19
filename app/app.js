@@ -6,6 +6,10 @@ var app = angular.module('gitHubOrgBrowserApp', ['ngRoute']);
 app.config(function ($routeProvider) {
   $routeProvider
     .when('/', {
+      templateUrl: 'app/views/main.html',
+      controller: 'MainCtrl'
+    })
+    .when('/browse', {
       templateUrl: 'app/views/organisation.html',
       controller: 'OrganisationCtrl'
     })
@@ -14,8 +18,20 @@ app.config(function ($routeProvider) {
     });
 });
 
+app.controller('MainCtrl', function ($scope, $location) {
+  $scope.organisationName = 'BtDraftOrganization';
+  $scope.separator = '.';
+  $scope.browse = browse;
 
-app.controller('OrganisationCtrl', function ($scope, $http) {
+
+  function browse() {
+    $location.path('/browse').search({org: $scope.organisationName, sep: $scope.separator});
+  }
+
+});
+
+
+app.controller('OrganisationCtrl', function ($scope, $http, $routeParams) {
   function ensure(parent,pathParts,i,leaf) {
     if(i >= pathParts.length){
       var link = 'https://github.com/' + $scope.organisationName + '/';
@@ -70,12 +86,13 @@ app.controller('OrganisationCtrl', function ($scope, $http) {
     return path.reverse();
   }
 
-  $scope.organisationName = 'BtDraftOrganization';
-  $scope.separator = '.';
+  $scope.organisationName = $routeParams.org;
+  $scope.separator = $routeParams.sep;
   $scope.tree = {isFolder: true, name: '', children: []};
   $scope.current = $scope.tree;
-  $scope.fetch = fetch;
   $scope.browse = browse;
   $scope.getPath = getPath;
+
+  fetch();
 
 });
