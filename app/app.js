@@ -31,7 +31,7 @@ app.controller('MainCtrl', function ($scope, $location) {
 });
 
 
-app.controller('OrganisationCtrl', function ($scope, $http, $routeParams) {
+app.controller('OrganisationCtrl', function ($scope, $http, $location, $routeParams) {
   function ensure(parent,pathParts,i,leaf) {
     if(i >= pathParts.length){
       var link = 'https://github.com/' + $scope.organisationName + '/';
@@ -76,6 +76,10 @@ app.controller('OrganisationCtrl', function ($scope, $http, $routeParams) {
     $scope.current = element;
   }
 
+  function home() {
+    $location.path('/')
+  }
+
   function getPath(element) {
     var path = [];
     path.push(element);
@@ -91,6 +95,7 @@ app.controller('OrganisationCtrl', function ($scope, $http, $routeParams) {
   $scope.tree = {isFolder: true, name: '', children: []};
   $scope.current = $scope.tree;
   $scope.browse = browse;
+  $scope.home = home;
   $scope.getPath = getPath;
 
   fetch();
