@@ -23,11 +23,16 @@
         </li>
       </ul>
 
-      <ul>
-        <li class="animate-repeat" ng-repeat="child in current.children | filter:{isFolder:false}">
-          <a ng-href={{child.link}} target="_blank"><span class="octicon octicon-repo"></span> {{child.name}}</a>
-        </li>
-      </ul>
+      <table class="table">
+          <tr class="animate-repeat" ng-repeat="child in current.children | filter:{isFolder:false}">
+            <td>
+              <a ng-href={{child.link}} target="_blank"><span class="octicon octicon-repo"></span> {{child.name}}</a>
+            </td>
+            <td>
+              {{child.repository.description}}
+            </td>
+          </tr>
+      </table>
     </div>
   </div>
 

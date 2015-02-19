@@ -32,14 +32,10 @@ app.controller('MainCtrl', function ($scope, $location, $routeParams) {
 
 
 app.controller('OrganisationCtrl', function ($scope, $http, $location, $routeParams) {
-  function ensure(parent,pathParts,i,leaf) {
-    if(i >= pathParts.length){
-      var link = 'https://github.com/' + $scope.organisationName + '/';
-      if(pathParts.length > 0) {
-        link = link + pathParts.join($scope.separator) + $scope.separator
-      }
-      link = link + leaf;
-      parent.children.push({isFolder: false, name: leaf, link: link  });
+  function ensure(parent,pathParts,i,repository) {
+    if(i >= (pathParts.length - 1) ){
+      var link = 'https://github.com/' + $scope.organisationName + '/' + pathParts.join($scope.separator);
+      parent.children.push({isFolder: false, name: pathParts[i], link: link, repository: repository });
       return;
     }
     var children = $.grep(parent.children, function(child){ return child.isFolder && child.name === pathParts[i];});
@@ -50,11 +46,11 @@ app.controller('OrganisationCtrl', function ($scope, $http, $location, $routePar
     } else {
       child = children[0];
     }
-    ensure(child, pathParts, i + 1, leaf);
+    ensure(child, pathParts, i + 1, repository);
   }
 
-  function insert(parts) {
-    ensure($scope.tree,parts.slice(0,-1),0,parts.slice(-1)[0]);
+  function insert(parts,repository) {
+    ensure($scope.tree,parts,0,repository);
   }
 
   function fetch() {
@@ -65,8 +61,8 @@ app.controller('OrganisationCtrl', function ($scope, $http, $location, $routePar
             return repository.name;
         });
         $scope.tree = {isFolder: true, name: $scope.organisationName, children: []};
-        $.each($scope.names, function(i,name){
-          insert(name.split($scope.separator));
+        $.each(data, function(i,repository){
+          insert(repository.name.split($scope.separator),repository);
         });
         $scope.current = $scope.tree;
       }).
